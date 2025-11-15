@@ -1,85 +1,80 @@
+// calculator logic
 (() => {
-  const screen = document.getElementById('screen');
-  let current = '0';
-  let operator = null;
-  let previous = null;
-  let resetNext = false;
+  const display = document.getElementById('display');
+  let expression = '';
 
-  function updateScreen() {
-    screen.value = current;
-  }
+  const setDisplay = (v) => display.textContent = v === '' ? '0' : v;
 
-  function inputNumber(n) {
-    if (resetNext) {
-      current = n;
-      resetNext = false;
-    } else {
-      current = (current === '0') ? n : current + n;
-    }
-  }
+  const buttons = document.querySelectorAll('.btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.getAttribute('data-value');
+      const action = btn.getAttribute('data-action');
+      handleInput(val, action);
+    });
+  });
 
-  function inputDot() {
-    if (resetNext) { current = '0.'; resetNext = false; return; }
-    if (!current.includes('.')) current += '.';
-  }
-
-  function clearAll() {
-    current = '0';
-    operator = null;
-    previous = null;
-    resetNext = false;
-  }
-
-  function backspace() {
-    if (resetNext) { current = '0'; resetNext = false; return; }
-    current = current.length > 1 ? current.slice(0, -1) : '0';
-  }
-
-  function doOperator(op) {
-    if (operator && !resetNext) {
-      compute();
-    }
-    previous = parseFloat(current);
-    operator = op;
-    resetNext = true;
-  }
-
-  function compute() {
-    if (operator == null || previous == null) return;
-    const a = previous;
-    const b = parseFloat(current);
-    let res = 0;
-    switch (operator) {
-      case 'plus': res = a + b; break;
-      case 'minus': res = a - b; break;
-      case 'multiply': res = a * b; break;
-      case 'divide': res = b === 0 ? 'Error' : a / b; break;
-    }
-    current = (typeof res === 'number') ? String(parseFloat(res.toFixed(10)).toString()) : String(res);
-    operator = null;
-    previous = null;
-    resetNext = true;
-  }
-
-  document.addEventListener('click', (e) => {
-    const t = e.target;
-    if (t.classList.contains('num')) {
-      inputNumber(t.dataset.value);
-      updateScreen();
+  function handleInput(value, action){
+    if(action === 'clear'){
+      expression = '';
+      setDisplay(expression);
       return;
     }
-    const action = t.dataset.action;
-    if (!action) return;
-    if (action === 'clear') { clearAll(); updateScreen(); return; }
-    if (action === 'back') { backspace(); updateScreen(); return; }
-    if (action === 'dot') { inputDot(); updateScreen(); return; }
-    if (action === 'equal') { compute(); updateScreen(); return; }
-    if (['plus','minus','multiply','divide'].includes(action)) {
-      doOperator(action);
+    if(action === 'back'){
+      expression = expression.slice(0,-1);
+      setDisplay(expression);
       return;
+    }
+    if(action === 'calculate'){
+      calculate();
+      return;
+    }
+
+    if(!value) return;
+
+    const last = expression.slice(-1);
+
+    if(value === '.'){
+      const lastOpIndex = Math.max(expression.lastIndexOf('+'), expression.lastIndexOf('-'), expression.lastIndexOf('*'), expression.lastIndexOf('/'));
+      const currentNumber = expression.slice(lastOpIndex+1);
+      if(currentNumber.includes('.')) return;
+      if(currentNumber === '' ) value = '0.';
+    }
+
+    if(/[\+\-\*\/]/.test(value)){
+      if(expression === '' && value !== '-') return;
+      if(/[\+\-\*\/]/.test(last)) {
+        expression = expression.slice(0,-1) + value;
+        setDisplay(expression);
+        return;
+      }
+    }
+
+    expression += value;
+    setDisplay(expression);
+  }
+
+  function calculate(){
+    if(expression === '') return;
+    try {
+      if(!/^[0-9.+\-*/() ]+$/.test(expression)) { setDisplay('Error'); expression = ''; return; }
+      const result = Function('"use strict"; return (' + expression + ')')();
+      expression = String(Number.isFinite(result) ? +result.toFixed(10) : result);
+      setDisplay(expression);
+    } catch(e){
+      setDisplay('Error');
+      expression = '';
+    }
+  }
+
+  // keyboard support
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') { e.preventDefault(); handleInput(null,'calculate'); return; }
+    if(e.key === 'Backspace'){ e.preventDefault(); handleInput(null,'back'); return; }
+    if(e.key === 'Escape'){ e.preventDefault(); handleInput(null,'clear'); return; }
+    if(/^[0-9+\-*/.]$/.test(e.key)){
+      handleInput(e.key, null);
     }
   });
 
-  // initial
-  updateScreen();
 })();
