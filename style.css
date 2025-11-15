@@ -1,76 +1,71 @@
-:root{
-  --bg: #071428;
-  --accent: #4da3ff;
-  --btn-text: #ffffff;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg,#071428,#061a2a);
-  font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  color:#e8f2ff;
-  padding:20px;
+/* ---------- General ---------- */
+body {
+  background: #0b1220;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.calc-wrap{
-  width:360px;
-  max-width:95vw;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:12px;
-  padding:18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+/* ---------- Calculator Box ---------- */
+.calculator {
+  background: #081629;
+  padding: 20px;
+  border-radius: 14px;
+  width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
 }
 
-.title{
-  margin:0 0 10px 0;
-  font-size:18px;
-  text-align:center;
-  color:var(--accent);
-}
-
-.display{
-  background:#0b1220;
-  border-radius:8px;
-  padding:18px;
-  font-size:28px;
-  text-align:right;
-  min-height:56px;
-  margin-bottom:12px;
-  overflow:hidden;
-  word-break:break-all;
-}
-
-.keys{
-  display:grid;
-  grid-template-columns: repeat(4,1fr);
-  gap:8px;
-}
-
-.btn{
-  background: #122032;
+/* ---------- Display ---------- */
+#display {
+  width: 100%;
+  height: 60px;
+  background: #0f2540;
   border: none;
-  padding:16px;
-  border-radius:8px;
-  font-size:18px;
-  color:var(--btn-text);
-  cursor:pointer;
-  user-select:none;
-  transition:transform .05s ease, box-shadow .05s;
-  box-shadow: 0 4px 8px rgba(2,6,23,0.5);
+  outline: none;
+  text-align: right;
+  padding: 15px;
+  font-size: 26px;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 15px;
 }
 
-.btn:active{ transform:translateY(1px) scale(.998); }
+/* ---------- Buttons Grid ---------- */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
 
-.btn.op{ background:#1f2b44; color:var(--accent); font-weight:600; }
-.btn.equals{ grid-column:4; background:var(--accent); color:white; font-weight:700; }
-.btn.wide{ grid-column:1 / span 2; background:#223246; }
-.btn.zero{ grid-column:1 / span 2; }
+/* ---------- Buttons Style ---------- */
+button {
+  padding: 18px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  background: #1a2b44;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-@media (max-width:400px){
-  .display{ font-size:22px; padding:14px; min-height:48px;}
-  .btn{ padding:12px; font-size:16px;}
+button:hover {
+  background: #223652;
+}
+
+/* ---------- Special Buttons ---------- */
+.equal {
+  background: #1b82f5;
+  grid-column: span 2;
+}
+
+.clear {
+  background: #d9534f;
+}
+
+.op {
+  background: #2962ff;
 }
