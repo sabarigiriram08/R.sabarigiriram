@@ -1,104 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Tribute to Dr. A.P.J. Abdul Kalam</title>
-
-<!-- Inline CSS -->
-<style>
-  :root{--bg:#0b1220;--card:#071832;--accent:#4da3ff;--text:#e8f2ff}
-  *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;background:linear-gradient(180deg,#071428,#061a2a);font-family:Inter,Arial,Helvetica,sans-serif;color:var(--text);display:flex;align-items:center;justify-content:center;padding:20px}
-  .wrapper{width:920px;max-width:95vw;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
-  .hero{display:flex;gap:18px;align-items:center}
-  .photo{width:210px;flex:0 0 210px;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
-  .photo img{width:100%;height:100%;object-fit:cover;display:block}
-  .head{flex:1}
-  h1{margin:0;font-size:26px;color:var(--accent)}
-  h2{margin:6px 0 14px 0;font-size:16px;color:#bcdcff;font-weight:600}
-  p{line-height:1.6;color:#dbecff;margin:0 0 12px 0}
-  .meta{font-size:14px;color:#9fc6ff;margin-bottom:12px}
-  .btn-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-  .btn{background:transparent;border:1px solid rgba(77,163,255,0.12);color:var(--accent);padding:8px 12px;border-radius:8px;cursor:pointer}
-  .section{margin-top:18px;padding-top:12px;border-top:1px dashed rgba(255,255,255,0.03)}
-  .quote{font-style:italic;color:#cfe9ff;padding:10px 12px;border-left:4px solid rgba(77,163,255,0.12);background:linear-gradient(90deg, rgba(77,163,255,0.03), transparent)}
-  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-  .fact{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;text-align:center}
-  .fact h3{margin:0;font-size:20px;color:var(--accent)}
-  .fact p{margin:6px 0 0 0;color:#d0e9ff}
-  footer{margin-top:18px;font-size:13px;color:#9fbfe8;text-align:center}
-  @media (max-width:760px){
-    .hero{flex-direction:column;align-items:flex-start}
-    .photo{width:100%;height:220px}
-    .facts{grid-template-columns:repeat(2,1fr)}
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <article class="wrapper" role="main">
-    <div class="hero">
-      <div class="photo" aria-hidden="true">
-        <!-- Replace image URL if you want your own image -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/A._P._J._Abdul_Kalam_in_2008.jpg" alt="Dr. A. P. J. Abdul Kalam">
-      </div>
-      <div class="head">
-        <h1>Dr. A. P. J. Abdul Kalam</h1>
-        <h2>Missile Man of India • 11th President of India • Scientist & Teacher</h2>
-        <div class="meta">1931 – 2015 · Aerospace Scientist · Inspirational Leader · Author</div>
-
-        <div class="btn-row">
-          <button class="btn" onclick="scrollToSection('about')">About</button>
-          <button class="btn" onclick="scrollToSection('quotes')">Famous Quotes</button>
-          <button class="btn" onclick="scrollToSection('facts')">Quick Facts</button>
-          <button class="btn" onclick="openLink()">View on Wikipedia</button>
-        </div>
-      </div>
+  <div class="container">
+    <h2>Calculator</h2>
+    <div class="display"><input id="screen" value="0" readonly></div>
+    <div class="buttons">
+      <button data-action="clear">C</button>
+      <button data-action="back">←</button>
+      <button data-action="divide">÷</button>
+      <button class="num" data-value="7">7</button>
+      <button class="num" data-value="8">8</button>
+      <button class="num" data-value="9">9</button>
+      <button data-action="multiply">×</button>
+      <button class="num" data-value="4">4</button>
+      <button class="num" data-value="5">5</button>
+      <button class="num" data-value="6">6</button>
+      <button data-action="minus">-</button>
+      <button class="num" data-value="1">1</button>
+      <button class="num" data-value="2">2</button>
+      <button class="num" data-value="3">3</button>
+      <button data-action="plus">+</button>
+      <button class="num" data-value="0">0</button>
+      <button data-action="dot">.</button>
+      <button data-action="equal" id="equal">=</button>
     </div>
+  </div>
 
-    <section id="about" class="section" aria-labelledby="about-heading">
-      <h3 id="about-heading" style="color:var(--accent);margin:0 0 10px 0">About Dr. Kalam</h3>
-      <p>
-        Dr. Avul Pakir Jainulabdeen Abdul Kalam was an Indian aerospace scientist who served as the 11th President of India (2002–2007).
-        Known as the "Missile Man of India" for his work on ballistic missile and launch vehicle technology, he inspired millions through his dedication to education and innovation.
-      </p>
-      <p>
-        Beyond his scientific achievements, Dr. Kalam was a beloved teacher and author, encouraging young people to dream big and work hard.
-        His humility, discipline, and commitment to the nation's progress continue to influence students and professionals worldwide.
-      </p>
-      <div style="margin-top:10px" class="quote">"Dream, dream, dream. Dreams transform into thoughts and thoughts result in action." — A.P.J. Abdul Kalam</div>
-    </section>
-
-    <section id="quotes" class="section" aria-labelledby="quotes-heading">
-      <h3 id="quotes-heading" style="color:var(--accent);margin:0 0 10px 0">Famous Quotes</h3>
-      <p>“You have to dream before your dreams can come true.”</p>
-      <p>“If you want to shine like a sun, first burn like a sun.”</p>
-      <p>“I was whispered to by my dreams — and I followed them.”</p>
-    </section>
-
-    <section id="facts" class="section" aria-labelledby="facts-heading">
-      <h3 id="facts-heading" style="color:var(--accent);margin:0 0 10px 0">Quick Facts</h3>
-      <div class="facts" role="list">
-        <div class="fact" role="listitem"><h3>Missile Program</h3><p>Key contributor to India's guided missile program</p></div>
-        <div class="fact" role="listitem"><h3>President</h3><p>11th President of India (2002–2007)</p></div>
-        <div class="fact" role="listitem"><h3>Author</h3><p>Wrote books like Wings of Fire, Ignited Minds</p></div>
-      </div>
-    </section>
-
-    <footer>
-      <p>Tribute page made by Sabari • Hosted on GitHub Pages</p>
-    </footer>
-  </article>
-
-<!-- Inline JS -->
-<script>
-  function scrollToSection(id){
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-  function openLink(){
-    window.open('https://en.wikipedia.org/wiki/A._P._J._Abdul_Kalam','_blank');
-  }
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
